@@ -1,0 +1,32 @@
+2018-06-12 21:13:16.143  INFO 25080 --- [main] com.example.sblog4j.SbLog4jApplication   : Starting SbLog4jApplication on zhangdamao with PID 25080 (E:\luowj\project\Demo\sb-log4j\target\classes started by Administrator in E:\luowj\project\Demo\sb-log4j)
+2018-06-12 21:13:16.148 DEBUG 25080 --- [main] com.example.sblog4j.SbLog4jApplication   : Running with Spring Boot v2.0.2.RELEASE, Spring v5.0.6.RELEASE
+2018-06-12 21:13:16.165  INFO 25080 --- [main] com.example.sblog4j.SbLog4jApplication   : No active profile set, falling back to default profiles: default
+2018-06-12 21:13:16.342  INFO 25080 --- [main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@b27cdc: startup date [Tue Jun 12 21:13:16 CST 2018]; root of context hierarchy
+2018-06-12 21:13:18.197  INFO 25080 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2018-06-12 21:13:18.228  INFO 25080 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-06-12 21:13:18.229  INFO 25080 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.31
+2018-06-12 21:13:18.241  INFO 25080 --- [localhost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_171\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\NetSarang;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.7.0_80\bin;D:\plsql\oralce_client;D:\plsql\oralce_client;;C:\Program Files\EmEditor;C:\Program Files\MySQL\MySQL Server 5.5\bin;D:\360Downloads\apache-maven-3.5.3\bin;C:\Program Files\Git\cmd;C:\Program Files\IDM Computer Solutions\UltraCompare;.]
+2018-06-12 21:13:18.388  INFO 25080 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-06-12 21:13:18.389  INFO 25080 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2047 ms
+2018-06-12 21:13:18.635  INFO 25080 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-06-12 21:13:18.642  INFO 25080 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-06-12 21:13:18.643  INFO 25080 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-06-12 21:13:18.643  INFO 25080 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-06-12 21:13:18.643  INFO 25080 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-06-12 21:13:18.873  INFO 25080 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-06-12 21:13:19.328  INFO 25080 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@b27cdc: startup date [Tue Jun 12 21:13:16 CST 2018]; root of context hierarchy
+2018-06-12 21:13:19.443  INFO 25080 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/log/console]}" onto public void com.example.sblog4j.controller.LogController.consoleLog()
+2018-06-12 21:13:19.449  INFO 25080 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-06-12 21:13:19.471  INFO 25080 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-06-12 21:13:19.626  INFO 25080 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-06-12 21:13:19.626  INFO 25080 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-06-12 21:13:19.881  INFO 25080 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-06-12 21:13:19.962  INFO 25080 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2018-06-12 21:13:19.969  INFO 25080 --- [main] com.example.sblog4j.SbLog4jApplication   : Started SbLog4jApplication in 4.905 seconds (JVM running for 6.681)
+2018-06-12 21:13:43.446  INFO 25080 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-06-12 21:13:43.447  INFO 25080 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-06-12 21:13:43.476  INFO 25080 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 29 ms
+2018-06-12 21:13:43.514 DEBUG 25080 --- [http-nio-8080-exec-1] c.e.sblog4j.controller.LogController     : debug
+2018-06-12 21:13:43.514 ERROR 25080 --- [http-nio-8080-exec-1] c.e.sblog4j.controller.LogController     : error
+2018-06-12 21:13:43.514  WARN 25080 --- [http-nio-8080-exec-1] c.e.sblog4j.controller.LogController     : warn
+2018-06-12 21:13:43.514  INFO 25080 --- [http-nio-8080-exec-1] c.e.sblog4j.controller.LogController     : info
