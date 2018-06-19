@@ -22,11 +22,10 @@ public class LoginAspect {
     //务必验证成功才可跳转到页面
     @Before("pointcut()")
     public void beforeLogin(JoinPoint joinPoint){
-
         String method = joinPoint.getSignature().getName();//调用方法名
         logger.info("开始调用方法：{}", method);
 
-
+        //一切请求拦截到登录页
     }
 
 }
