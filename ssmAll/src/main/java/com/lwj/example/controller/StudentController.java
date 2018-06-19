@@ -4,20 +4,27 @@ import com.lwj.example.entity.Student;
 import com.lwj.example.service.StudentService;
 import com.lwj.example.util.JsonResult;
 import org.apache.log4j.Logger;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @Controller
 @RequestMapping("/student")
 public class StudentController {
+    @Resource
+    private RedisTemplate redisTemplate;
     @Resource
     private StudentService studentService;
     private static Logger logger = Logger.getLogger(StudentController.class);
@@ -67,10 +74,23 @@ public class StudentController {
     //修改学生信息
     @RequestMapping(value = "/saveStudentInfo", method = RequestMethod.POST )
     @ResponseBody
-    public ModelAndView saveStudentInfo(ModelAndView model, Student student){
-        JsonResult jsonResult = studentService.saveStudentInfo(student);
+    public ModelAndView saveStudentInfo(ModelAndView model, Student student, @RequestParam("token")String token){
         model.setViewName("save");
-        model.addObject("msg", jsonResult.getMessage());
+
+        //用redis防止表单重复提交
+        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+        String key = "token_"+student.getName();
+        String value = (String)redisTemplate.opsForValue().get(key);
+        if(value != null){
+            model.addObject("msg","重复提交");
+        }else{
+            operations.set(key, token);
+            redisTemplate.expire(key, 30*60, TimeUnit.SECONDS);
+
+            JsonResult jsonResult = studentService.saveStudentInfo(student);
+            model.addObject("msg", jsonResult.getMessage());
+        }
+
         return model;
     }
 

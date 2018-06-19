@@ -65,15 +65,23 @@
             }
         }
 
+        function token(){
+            var token = Math.floor(Math.random()*100000);
+            $("#token").val(token);
+            // document.getElementById("token").value = token;
+        }
+
         $(function () {
             checkName();
             checkAge();
             checkPwd();
+            token();
         });
     </script>
 </head>
 <body>
     <form action="<%=request.getContextPath()%>/student/saveStudentInfo" method="post" onsubmit="return check()">
+        <input type="hidden" id="token" name="token" value="${token}"/>
         <input type="hidden" id="id" name="id" value="${id}"/>
         <c:choose>
             <c:when test="${not empty id}">
