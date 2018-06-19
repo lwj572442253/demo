@@ -12,7 +12,7 @@
     <title>登录</title>
 </head>
 <body>
-    <form action="<%=request.getContextPath()%>/login/checkLogin">
+    <form action="<%=request.getContextPath()%>/login/returnGrid" method="post">
         用户名：<input type="text" id="username" name="username"/>
         密  码：<input type="password" id="password" name="password"/>
         <input type="submit" value="提交"/>

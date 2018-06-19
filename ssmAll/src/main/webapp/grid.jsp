@@ -23,6 +23,9 @@
     </script>
 </head>
 <body>
+    <div id="loginInfo">
+        ${sessionScope.get("currentStudent").name}<a href="删除cookie url">注销</a>
+    </div>
     <input type="button" value="添加学生信息" id="add"/>
     <table border="1px">
         <tr>
