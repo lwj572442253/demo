@@ -23,6 +23,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <param-value>classpath*:log4j.properties</param-value>
   </context-param>
 
+  <!-- 加载AOP -->
+  <context-param>
+    <param-name>aopConfigLocation</param-name>
+    <param-value>classpath*:spring/spring-aop.xml</param-value>
+  </context-param>
+
   <!-- 设置编码过滤器 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
@@ -53,7 +59,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath*:spring/spring-mvc.xml</param-value>
+      <param-value>classpath*:spring/spring-*.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
