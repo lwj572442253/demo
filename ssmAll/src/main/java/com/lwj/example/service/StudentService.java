@@ -20,10 +20,10 @@ public class StudentService {
     private StudentDao studentDao;
 
     //分页查询
-    public List<Student> getStudentInfoList(Integer pageNo, Integer pageSize) throws ParseException {
+    public List<Student> getStudentInfoList(Integer pageNo, Integer pageSize, Map<String, String> searchMap) throws ParseException {
         List<Student> studentInfoList = new ArrayList<Student>();
 
-        List<Map<String, Object>> list = studentDao.getStudentInfoList(pageNo, pageSize);
+        List<Map<String, Object>> list = studentDao.getStudentInfoList(pageNo, pageSize, searchMap);
         Iterator<Map<String, Object>> iterator = list.iterator();
         while (iterator.hasNext()){
             Map<String, Object> map = iterator.next();
@@ -48,6 +48,25 @@ public class StudentService {
     public Student getStudentById(Integer id){
         Student student = studentDao.getStudentById(id);
         return student;
+    }
+
+    //获取学生信息
+    public List<Student> getStudentByCondition(String name){
+        List<Map<String, Object>> list = studentDao.getStudentByCondition(name);
+        List<Student> studentList = new ArrayList<Student>();
+        if(list.size()!=0){
+            Iterator<Map<String, Object>> iterator = list.iterator();
+            while (iterator.hasNext()){
+                Map<String, Object> studentMap = iterator.next();
+                Student student = new Student();
+                student.setId(Integer.valueOf(studentMap.get("id").toString()));
+                student.setName(studentMap.get("name").toString());
+                student.setAge(Integer.valueOf(studentMap.get("age").toString()));
+                student.setPassword(studentMap.get("password").toString());
+                studentList.add(student);
+            }
+        }
+        return studentList;
     }
 
     //保存学生信息

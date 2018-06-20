@@ -23,8 +23,25 @@
                     $("#nameMsg").html("名字不合法");
                     result = false;
                 }else {
-                    $("#nameMsg").html("");
-                    result = true;
+                    $.ajax({
+                        url:"<%=request.getContextPath()%>/student/getStudentByCondition",
+                        type:"post",
+                        data:{
+                            "name":name
+                        },
+                        dataType:"json",
+                        success:function (result1) {
+                            var data = result1.data;
+                            if(data != null && data != ""){
+                                $("#nameMsg").html("用户名已存在");
+                                result = false;
+                            }else{
+                                $("#nameMsg").html("");
+                                result = true;
+                            }
+                        }
+                    });
+
                 }
             });
         }
@@ -100,6 +117,7 @@
         <br>
         <input type="submit" value="提交"/>
     </form>
+    <div><a href="<%=request.getContextPath()%>/student/getStudentInfo?pageNo=1">返回首页</a></div>
     <div style="font-size: large">${msg}</div>
 </body>
 </html>

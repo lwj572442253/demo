@@ -13,6 +13,15 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>个人信息</title>
     <script>
+        function del() {
+            var msg = "您真的确定要删除吗？\n\n请确认！";
+            if (confirm(msg)==true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         function addStudentInfo() {
             $("#add").click(function () {
                 window.location.href = "<%=request.getContextPath()%>/save.jsp"
@@ -20,13 +29,65 @@
         }
 
         $(addStudentInfo);
+
+
+        var result = false;
+
+        function checkName() {
+            $("#name").blur(function () {
+                var name = $("#name").val();
+                var reg = /^[\u4e00-\u9fa5]{2,4}$/;
+                var str = name.replace(/(^\s+)|(\s+$)/g, "");//去除前后的空格
+                if (!reg.test(str)) {
+                    $("#nameMsg").html("名字不合法");
+                    result = false;
+                } else {
+                    $("#nameMsg").html("");
+                    result = true;
+                }
+            });
+        }
+
+        function checkAge() {
+            $("#age").blur(function () {
+                var age = $("#age").val();
+                var reg = /^[0-9]{1,3}$/;
+                if(!reg.test(age)){
+                    $("#ageMsg").html("年龄不合法");
+                    result = false;
+                }else {
+                    $("#ageMsg").html("");
+                    result = true;
+                }
+            });
+        }
+
+        function check() {
+            if(result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        $(function () {
+            checkName();
+            checkAge();
+        });
     </script>
 </head>
 <body>
     <div id="loginInfo">
-        ${sessionScope.get("currentStudent").name}<a href="<%=request.getContextPath()%>/login/logout?id=${sessionScope.get("currentStudent").id}">&nbsp 注销</a>
+        登录信息：${sessionScope.get("currentStudent").name}<a href="<%=request.getContextPath()%>/login/logout?id=${sessionScope.get("currentStudent").id}">&nbsp 注销</a>
     </div>
-    <input type="button" value="添加学生信息" id="add"/>
+    <br>
+    <form id="search" action="<%=request.getContextPath()%>/student/getStudentInfo" accept-charset="UTF-8" onsubmit="return check()" >
+        姓名：<input type="text" name="name" id="name"/><span id="nameMsg"></span>
+        年龄：<input type="text" name="age" id="age"/><span id="ageMsg"></span>
+        <input type="hidden" name="pageNo" value="1"/>
+        <input type="submit" value="搜索"/>
+    </form>
+
     <table border="1px">
         <tr>
             <td width="50">编号</td>
@@ -45,11 +106,13 @@
                 <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${per.updateDate}"/>
                 <td>
                     <a href="<%=request.getContextPath()%>/student/getStudentById?id=${per.id}">修改</a>
-                    <a href="<%=request.getContextPath()%>/student/deleteStudentInfo?id=${per.id}">删除</a>
+                    <a href="<%=request.getContextPath()%>/student/deleteStudentInfo?id=${per.id}" onclick="return del()">删除</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
+    <br>
+    <input type="button" value="添加学生信息" id="add"/>
     共${recordTotal}条记录，共${pageTotal}页，第
     <c:forEach var="i" begin="1" end="${pageTotal}">
         <a href="<%=request.getContextPath()%>/student/getStudentInfo?pageNo=${i}">[${i}]</a>
