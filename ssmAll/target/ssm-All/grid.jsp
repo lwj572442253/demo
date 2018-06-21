@@ -10,8 +10,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>个人信息</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/b.dialog.css" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/b.dialog.bootstrap3.css" type="text/css">
+    <script type="text/javascript" src="<%=request.getContextPath()%>/jq/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/jq/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/jq/b.dialog.min.js"></script>
+    <style>
+        .right{
+            float:left; width:100px; border:1px solid #000;
+            margin-left: 1px;
+        }
+        .left{
+            float:left; width:700px; border:1px solid #000
+        }
+    </style>
+
     <script>
         function del() {
             var msg = "您真的确定要删除吗？\n\n请确认！";
@@ -22,101 +36,90 @@
             }
         }
 
-        function addStudentInfo() {
+        function add(){
             $("#add").click(function () {
-                window.location.href = "<%=request.getContextPath()%>/save.jsp"
+                bDialog.open({
+                    title : '新增学生信息',
+                    width : 500,
+                    height : 200,
+                    url : '<%=request.getContextPath()%>/save.jsp',
+                    callback: function (result) {
+                        window.location.reload();
+                    }
+                });
             });
         }
 
-        $(addStudentInfo);
+        function update(obj) {
+            var parentNode = obj.parentNode;
+            var siblingNode = $(parentNode).siblings();
+            var id = siblingNode.eq(0).html();
 
-
-        var result = false;
-
-        function checkName() {
-            $("#name").blur(function () {
-                var name = $("#name").val();
-                var reg = /^[\u4e00-\u9fa5]{2,4}$/;
-                var str = name.replace(/(^\s+)|(\s+$)/g, "");//去除前后的空格
-                if (!reg.test(str)) {
-                    $("#nameMsg").html("名字不合法");
-                    result = false;
-                } else {
-                    $("#nameMsg").html("");
-                    result = true;
+            bDialog.open({
+                title: "修改学生信息",
+                width: 500,
+                height: 200,
+                url:"<%=request.getContextPath()%>/student/getStudentById?id="+id+"&work=update",
+                callback:function (result) {
+                    window.location.reload();
                 }
             });
-        }
-
-        function checkAge() {
-            $("#age").blur(function () {
-                var age = $("#age").val();
-                var reg = /^[0-9]{1,3}$/;
-                if(!reg.test(age)){
-                    $("#ageMsg").html("年龄不合法");
-                    result = false;
-                }else {
-                    $("#ageMsg").html("");
-                    result = true;
-                }
-            });
-        }
-
-        function check() {
-            if(result){
-                return true;
-            }else{
-                return false;
-            }
         }
 
         $(function () {
-            checkName();
-            checkAge();
+            add();
+            update(obj);
         });
+
     </script>
+
 </head>
 <body>
-    <div id="loginInfo">
-        登录信息：${sessionScope.get("currentStudent").name}<a href="<%=request.getContextPath()%>/login/logout?id=${sessionScope.get("currentStudent").id}">&nbsp 注销</a>
-    </div>
-    <br>
-    <form id="search" action="<%=request.getContextPath()%>/student/getStudentInfo" accept-charset="UTF-8" onsubmit="return check()" >
-        姓名：<input type="text" name="name" id="name"/><span id="nameMsg"></span>
-        年龄：<input type="text" name="age" id="age"/><span id="ageMsg"></span>
-        <input type="hidden" name="pageNo" value="1"/>
-        <input type="submit" value="搜索"/>
-    </form>
+    <div style="width: 1000px">
+        <div class="left">
+            <form id="search" action="<%=request.getContextPath()%>/student/getStudentInfo">
+                姓名：<input type="text" name="name" id="name"/><span id="nameMsg"></span>
+                年龄：<input type="text" name="age" id="age"/><span id="ageMsg"></span>
+                <input type="hidden" name="pageNo" value="1"/>
+                <input type="submit" value="搜索"/>
+            </form>
 
-    <table border="1px">
-        <tr>
-            <td width="50">编号</td>
-            <td width="50">姓名</td>
-            <td width="50">年龄</td>
-            <td width="100">注册时间</td>
-            <td width="150">更新时间</td>
-            <td width="150">操作</td>
-        </tr>
-        <c:forEach items="${studentInfoList}" var="per">
-            <tr>
-                <td><c:out value="${per.id}"/></td>
-                <td><c:out value="${per.name}"/></td>
-                <td><c:out value="${per.age}"/></td>
-                <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${per.createDate}"/>
-                <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${per.updateDate}"/>
-                <td>
-                    <a href="<%=request.getContextPath()%>/student/getStudentById?id=${per.id}">修改</a>
-                    <a href="<%=request.getContextPath()%>/student/deleteStudentInfo?id=${per.id}" onclick="return del()">删除</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-    <br>
-    <input type="button" value="添加学生信息" id="add"/>
-    共${recordTotal}条记录，共${pageTotal}页，第
-    <c:forEach var="i" begin="1" end="${pageTotal}">
-        <a href="<%=request.getContextPath()%>/student/getStudentInfo?pageNo=${i}">[${i}]</a>
-    </c:forEach>
-    页
+            <table border="1px">
+                <tr>
+                    <td width="50">编号</td>
+                    <td width="50">姓名</td>
+                    <td width="50">年龄</td>
+                    <td width="100">注册时间</td>
+                    <td width="150">更新时间</td>
+                    <td width="150">操作</td>
+                </tr>
+                <c:forEach items="${studentInfoList}" var="per">
+                    <tr>
+                        <td><c:out value="${per.id}"/></td>
+                        <td><c:out value="${per.name}"/></td>
+                        <td><c:out value="${per.age}"/></td>
+                        <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${per.createDate}"/>
+                        <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${per.updateDate}"/>
+                        <td>
+                            <input type="button" value="修改" onclick="update(this)"/>
+                            <a href="<%=request.getContextPath()%>/student/deleteStudentInfo?id=${per.id}" onclick="return del()">删除</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <br>
+            共${recordTotal}条记录，共${pageTotal}页，第
+            <c:forEach var="i" begin="1" end="${pageTotal}">
+                <a href="<%=request.getContextPath()%>/student/getStudentInfo?pageNo=${i}">[${i}]</a>
+            </c:forEach>
+            页
+            <input type="button" value="添加学生信息" id="add"/>
+        </div>
+
+        <div id="loginInfo" class="right">
+            登录信息：<br>
+            ${sessionScope.get("currentStudent").name}<a href="<%=request.getContextPath()%>/login/logout?id=${sessionScope.get("currentStudent").id}">&nbsp 注销</a>
+        </div>
+    </div>
 </body>
 </html>

@@ -52,12 +52,13 @@ public class StudentController {
             searchMap.put("name",name);
         }
 
+        int pageSize = 10;
         //列表信息
-        List<Student> studentInfoList = studentService.getStudentInfoList(pageNo, 2, searchMap);
+        List<Student> studentInfoList = studentService.getStudentInfoList(pageNo, pageSize, searchMap);
         //分页信息
         List<Student> studentPageInfo = studentService.getStudentInfoList(null,null, searchMap);
         int recordTotal = studentPageInfo.size();
-        int pageTotal = (int)Math.ceil(recordTotal/2.0);
+        int pageTotal = (int)Math.ceil(recordTotal/(double)pageSize);
 
         model.addObject("studentInfoList", studentInfoList);
         model.addObject("recordTotal",recordTotal);
@@ -67,9 +68,9 @@ public class StudentController {
     }
 
     //获取学生信息
-    @RequestMapping("/getStudentById")
+    @RequestMapping(value = "/getStudentById",method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getStudentById(ModelAndView model, @RequestParam("id") Integer id){
+    public ModelAndView getStudentById(ModelAndView model, @RequestParam("id") Integer id, @RequestParam("work") String work){
         Student student = studentService.getStudentById(id);
         String name = student.getName();
         String password = student.getPassword();
@@ -79,6 +80,9 @@ public class StudentController {
         model.addObject("name", name);
         model.addObject("password", password);
         model.addObject("age", age);
+        if(work != null){
+            model.addObject("work", work);
+        }
         model.setViewName("save");
         return model;
     }
